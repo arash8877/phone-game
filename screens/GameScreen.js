@@ -14,11 +14,22 @@ const generateRandomBetween = (min, max, exclude) => {
   }
 };
 
+let minBoundary = 1;
+let maxBoundary = 100;
+
 const GameScreen = ({ userNumber }) => {
-  const initialGuess = generateRandomBetween(1, 100, userNumber);
+  const initialGuess = generateRandomBetween(minBoundary, maxBoundary, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
-  const nextGuessHandler = (direction) => {}
+  const nextGuessHandler = (direction) => {
+    if (direction === 'lower') {
+      maxBoundary = currentGuess - 1;
+      const newRndNumber = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
+    } else {
+      minBoundary = currentGuess + 1;
+      const newRndNumber = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
+    }
+  }
 
   return (
     <View style={styles.screen}>
