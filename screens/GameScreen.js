@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -18,18 +18,35 @@ let minBoundary = 1;
 let maxBoundary = 100;
 
 const GameScreen = ({ userNumber }) => {
-  const initialGuess = generateRandomBetween(minBoundary, maxBoundary, userNumber);
+  const initialGuess = generateRandomBetween(
+    minBoundary,
+    maxBoundary,
+    userNumber
+  );
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
   const nextGuessHandler = (direction) => {
-    if (direction === 'lower') {
-      maxBoundary = currentGuess - 1;
-      const newRndNumber = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
+    if (
+      (direction === "lower" && currentGuess < userNumber) ||
+      (direction === "greater" && currentGuess > userNumber)
+    ) {
+      Alert.alert("Do not lie! , You know that this is wrong !!", [
+        { text: "Sorry!", style: "cancel" },
+      ]);
+      return
+    }
+    if (direction === "lower") {
+      maxBoundary = currentGuess;
     } else {
       minBoundary = currentGuess + 1;
-      const newRndNumber = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
     }
-  }
+    const newRndNumber = generateRandomBetween(
+      minBoundary,
+      maxBoundary,
+      currentGuess
+    );
+    setCurrentGuess(newRndNumber);
+  };
 
   return (
     <View style={styles.screen}>
@@ -38,8 +55,12 @@ const GameScreen = ({ userNumber }) => {
       <View>
         <Text>Higher or Lower?</Text>
         <View>
-          <PrimaryButton onPress={}>+</PrimaryButton>
-          <PrimaryButton onPress={}>-</PrimaryButton>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+            -
+          </PrimaryButton>
+          <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+            +
+          </PrimaryButton>
         </View>
       </View>
       {/* <View>LOG ROUNDS</View> */}
