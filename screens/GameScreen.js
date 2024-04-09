@@ -17,17 +17,19 @@ const generateRandomBetween = (min, max, exclude) => {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-const GameScreen = ({ userNumber }) => {
+const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGuess = generateRandomBetween(
-    minBoundary,
-    maxBoundary,
+    1,
+    100,
     userNumber
   );
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
   useEffect(() => {
-    if (currentGuess === userNumber)  {}
-  }, [])
+    if (currentGuess === userNumber)  {
+      onGameOver();
+    }
+  }, [currentGuess, userNumber, onGameOver])
   
 
   const nextGuessHandler = (direction) => {
