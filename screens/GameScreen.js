@@ -5,7 +5,8 @@ import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
+import GuessLogItem from "../components/game/GuessLogItem";
 
 const generateRandomBetween = (min, max, exclude) => {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -34,8 +35,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   useEffect(() => {
     minBoundary = 1;
     maxBoundary = 100;
-  }, [])
-  
+  }, []);
 
   const nextGuessHandler = (direction) => {
     if (
@@ -58,30 +58,39 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       currentGuess
     );
     setCurrentGuess(newRndNumber);
-    setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds]);
+    setGuessRounds((prevGuessRounds) => [newRndNumber, ...prevGuessRounds]);
   };
+
+  const guessRoundsListLength = guessRounds.length;
 
   return (
     <View style={styles.screen}>
       <Title>OPPONENT'S GUESS</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        <InstructionText sStyle={styles.instructionText}>Higher or Lower?</InstructionText>
+        <InstructionText sStyle={styles.instructionText}>
+          Higher or Lower?
+        </InstructionText>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-              <Entypo name="minus" size={24} color="white"/ >
+              <Entypo name="minus" size={24} color="white" />
             </PrimaryButton>
-            </View>
-            <View style={styles.buttonContainer}>
+          </View>
+          <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
-            <Entypo name="plus" size={24} color="white"/ >
+              <Entypo name="plus" size={24} color="white" />
             </PrimaryButton>
           </View>
         </View>
       </Card>
       <View>
-        {guessRounds.map(item => <Text key={item}>{item}</Text>)}
+        {/* {guessRounds.map(item => <Text key={item}>{item}</Text>)} */}
+        <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => <GuessLogItem roundNumber={guessRoundsListLength - itemData.index} guess={itemData.item}/>}
+          keyExtractor={(item) => item}
+        />
       </View>
     </View>
   );
