@@ -10,7 +10,7 @@ const GameOverScreen = ({roundsNumber, userNumber, onStartNewGame}) => {
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
-          source={require("../assets/images/success.png")}
+          source={require("../assets/images/success.jpg")}
         />
       </View>
       <Text style={styles.summaryText}>
