@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert, Text, FlatList } from "react-native";
+import { View, StyleSheet, Alert, Text, FlatList, Dimensions } from "react-native";
 import Title from "../components/ui/Title";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -105,6 +105,9 @@ const GameScreen = ({ userNumber, onGameOver }) => {
 };
 
 export default GameScreen;
+
+
+
 
 const styles = StyleSheet.create({
   screen: {
