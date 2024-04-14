@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 import GameScreen from "./screens/GameScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import Colors from "./components/constants/colors";
@@ -56,6 +57,8 @@ export default function App() {
   }
 
   return (
+    <>
+    <StatusBar style='light'/>
     <LinearGradient
       colors={[Colors.primary700, Colors.accent500]}
       style={styles.rootScreen}
@@ -69,6 +72,7 @@ export default function App() {
         <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
+    </>
   );
 }
 
